@@ -24,28 +24,16 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
-    return {
-      params: {
-        units: "",
-        q: "",
-      },
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["getActiveUnits", "getActiveCity"]),
+    ...mapGetters(["getActiveUnits"]),
   },
   methods: {
-    ...mapActions(["changeActiveUnits", "loadWeather"]),
+    ...mapActions(["changeActiveUnits"]),
     setActiveUnits(unit) {
       this.changeActiveUnits(unit);
-      this.params.units = this.getActiveUnits;
-      this.params.q = this.getActiveCity;
-      this.loadWeather(this.params);
     },
-  },
-  beforeMount() {
-    this.params.units = this.getActiveUnits;
-    this.params.q = this.getActiveCity;
   },
 };
 </script>
@@ -86,5 +74,13 @@ export default {
       }
     }
   }
+}
+@media (max-width: 575px) {
+    .units {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+    }
 }
 </style>

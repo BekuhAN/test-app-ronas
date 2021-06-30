@@ -28,7 +28,6 @@ export default {
     return {
       isChangeCity: false,
       params: {
-        units: "",
         q: "",
       },
     };
@@ -42,13 +41,16 @@ export default {
       this.isChangeCity = !this.isChangeCity;
     },
     saveActiveCity() {
-      this.changeActiveCity(this.params.q);
-      this.loadWeather(this.params);
-      this.showChange();
+      if (this.params.q) {
+        this.changeActiveCity(this.params.q);
+        this.loadWeather(this.params);
+        this.showChange();
+      } else {
+        alert("Введите название города!");
+      }
     },
     fetchData() {
       this.params.q = this.getActiveCity;
-      this.params.units = this.getActiveUnits;
     },
     async setGeolocation() {
       await this.loadGeolocation();
@@ -69,8 +71,9 @@ export default {
   min-height: 91px;
   &__city {
     font-size: 50px;
-    line-height: 60px;
-    margin-bottom: 10px;
+    line-height: 1;
+    margin-bottom: 20px;
+    overflow: hidden;
   }
   &__btns {
     display: flex;
@@ -101,11 +104,11 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 32px;
+    z-index: 10;
     &__city {
       color: #000;
       border: none;
       font-size: 30px;
-      line-height: 36px;
       &:focus {
         border: none;
         outline: none;
@@ -115,9 +118,33 @@ export default {
       background: none;
       color: #1086ff;
       font-size: 30px;
-      line-height: 36px;
       border: none;
       text-transform: uppercase;
+    }
+  }
+}
+@media (max-width: 575px) {
+  .search {
+    &__city {
+        font-size: 30px;
+        width: 240px;
+    }
+    &__btns {
+      &__item {
+        font-size: 15px;
+      }
+    }
+    &__change {
+      width: calc(100% - 30px);
+      margin: 0px 15px;
+      padding: 20px;
+      &__city {
+          font-size: 22px;
+          width: 240px;
+      }
+      &__btn {
+          font-size: 22px;
+      }
     }
   }
 }

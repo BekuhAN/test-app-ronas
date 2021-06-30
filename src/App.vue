@@ -1,10 +1,13 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    :class="getWeather.weather[0].main.toLowerCase()"
+  >
     <header class="header">
       <div class="container">
         <div class="row">
-          <Search class="header__item col-10" />
-          <Units class="header__item col-2" />
+          <Search class="header__item col-sm-10 col-12" />
+          <Units class="header__item col-sm-2 col-12" />
         </div>
       </div>
     </header>
@@ -15,7 +18,7 @@
     </main>
     <footer>
       <div class="container">
-        <Details />
+        <Details :data="getWeather" />
       </div>
     </footer>
   </div>
@@ -42,11 +45,12 @@ export default {
   },
   beforeMount() {
     this.fetchData();
+    console.log(this.getWeather);
   },
   methods: {
     ...mapActions(["loadWeather"]),
-    fetchData() {
-      this.loadWeather(this.params);
+    async fetchData() {
+      await this.loadWeather(this.params);
     },
   },
   components: {
@@ -61,26 +65,30 @@ export default {
 <style lang="scss">
 * {
   color: inherit;
+  line-height: 1;
 }
 
 #app {
   font-family: LatoRegular;
-  background: #498cec;
   color: #ffffff;
   position: fixed;
-  padding: 75px 0;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  // .header {
-  //   display: flex;
-  //   // &__item {
-  //   //   flex: 0 0 50%;
-  //   // }
-  // }
+  justify-content: space-around;
+  &.clear,
+  &.clouds {
+    background: #498cec;
+  }
+  &.thunderstorm,
+  &.rain {
+    background: #7290b9;
+  }
+  .header {
+    position: relative;
+  }
 }
 </style>

@@ -41,11 +41,18 @@ export default new Vuex.Store({
   },
   actions: {
     async loadWeather({ commit }, params) {
-      const result = await axios.get(
-        "http://api.openweathermap.org/data/2.5/weather?appid=7e591edc229e805cb3a6d42218901ae9&lang=ru",
-        { params }
-      );
-      commit("updateWeather", result.data);
+      try {
+        const result = await axios.get(
+          "http://api.openweathermap.org/data/2.5/weather?appid=7e591edc229e805cb3a6d42218901ae9&lang=ru&units=metric",
+          { params }
+        );
+        commit("updateWeather", result.data);
+      } catch (error) {
+        if (error.response.status == 404) {
+          alert("Неверное название города!");
+        }
+        console.log(error);
+      }
     },
     async loadGeolocation({ commit }) {
       const result = await axios.get("http://ip-api.com/json?lang=ru");

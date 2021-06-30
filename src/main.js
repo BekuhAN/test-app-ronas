@@ -16,6 +16,11 @@ Vue.filter("capitalize", function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 });
 
+Vue.filter("far", function(value) {
+  if (!value) return "";
+  return Math.round((9 / 5) * value + 32);
+});
+
 new Vue({
   store,
   render: (h) => h(App),
