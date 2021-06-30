@@ -3,8 +3,8 @@
     <header class="header">
       <div class="container">
         <div class="row">
-          <Search class="header__item col-6" />
-          <Units class="header__item col-6" />
+          <Search class="header__item col-10" />
+          <Units class="header__item col-2" />
         </div>
       </div>
     </header>
@@ -45,8 +45,8 @@ export default {
   },
   methods: {
     ...mapActions(["loadWeather"]),
-    async fetchData() {
-      await this.loadWeather(this.params);
+    fetchData() {
+      this.loadWeather(this.params);
     },
   },
   components: {

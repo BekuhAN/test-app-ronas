@@ -28,13 +28,13 @@ export default {
     return {
       isChangeCity: false,
       params: {
-        units: "metric",
+        units: "",
         q: "",
       },
     };
   },
   computed: {
-    ...mapGetters(["getActiveCity", "getGeolocation"]),
+    ...mapGetters(["getActiveCity", "getGeolocation", "getActiveUnits"]),
   },
   methods: {
     ...mapActions(["changeActiveCity", "loadWeather", "loadGeolocation"]),
@@ -48,12 +48,13 @@ export default {
     },
     fetchData() {
       this.params.q = this.getActiveCity;
+      this.params.units = this.getActiveUnits;
     },
     async setGeolocation() {
       await this.loadGeolocation();
-      this.loadWeather(this.params);
       this.changeActiveCity(this.getGeolocation.city);
       this.fetchData();
+      this.loadWeather(this.params);
     },
   },
   beforeMount() {
@@ -65,6 +66,7 @@ export default {
 <style lang="scss">
 .search {
   position: relative;
+  min-height: 91px;
   &__city {
     font-size: 50px;
     line-height: 60px;
@@ -72,6 +74,7 @@ export default {
   }
   &__btns {
     display: flex;
+    align-items: center;
     &__item {
       margin-right: 25px;
       padding: 0;

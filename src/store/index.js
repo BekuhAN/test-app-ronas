@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     weather: [],
-    activeUnits: "Celsius",
+    activeUnits: "metric",
     activeCity: "Краснодар",
     geolocation: [],
   },
@@ -17,6 +17,9 @@ export default new Vuex.Store({
     },
     getActiveCity(state) {
       return state.activeCity;
+    },
+    getActiveUnits(state) {
+      return state.activeUnits;
     },
     getGeolocation(state) {
       return state.geolocation;
@@ -28,6 +31,9 @@ export default new Vuex.Store({
     },
     updateActiveCity(state, payload) {
       state.activeCity = payload;
+    },
+    updateActiveUnits(state, payload) {
+      state.activeUnits = payload;
     },
     updateGeolocation(state, payload) {
       state.geolocation = payload;
@@ -47,6 +53,9 @@ export default new Vuex.Store({
     },
     changeActiveCity({ commit }, city) {
       commit("updateActiveCity", city);
+    },
+    changeActiveUnits({ commit }, unit) {
+      commit("updateActiveUnits", unit);
     },
   },
 });
