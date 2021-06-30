@@ -1,28 +1,86 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header class="header">
+      <div class="container">
+        <div class="row">
+          <Search class="header__item col-6" />
+          <Units class="header__item col-6" />
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <Weather :data="getWeather" />
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <Details />
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Search from "./components/search.vue";
+import Units from "./components/units.vue";
+import Details from "./components/details.vue";
+import Weather from "./components/weather.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      params: {
+        units: "metric",
+        q: "Краснодар",
+      },
+    };
+  },
+  computed: {
+    ...mapGetters(["getWeather"]),
+  },
+  beforeMount() {
+    this.fetchData();
+  },
+  methods: {
+    ...mapActions(["loadWeather"]),
+    async fetchData() {
+      await this.loadWeather(this.params);
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    Search,
+    Units,
+    Details,
+    Weather,
+  },
+};
 </script>
 
 <style lang="scss">
+* {
+  color: inherit;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: LatoRegular;
+  background: #498cec;
+  color: #ffffff;
+  position: fixed;
+  padding: 75px 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // .header {
+  //   display: flex;
+  //   // &__item {
+  //   //   flex: 0 0 50%;
+  //   // }
+  // }
 }
 </style>
