@@ -6,10 +6,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    weather: [],
+    weather: null,
     activeUnits: "metric",
     activeCity: "Краснодар",
-    geolocation: [],
+    geolocation: null,
   },
   getters: {
     getWeather(state) {

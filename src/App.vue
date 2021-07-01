@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    :class="getWeather.weather[0].main.toLowerCase()"
+    :class="getWeather ? getWeather.weather[0].main.toLowerCase() : ''"
   >
     <header class="header">
       <div class="container">
@@ -13,12 +13,12 @@
     </header>
     <main>
       <div class="container">
-        <Weather :data="getWeather" />
+        <Weather v-if="getWeather" :data="getWeather" />
       </div>
     </main>
     <footer>
       <div class="container">
-        <Details :data="getWeather" />
+        <Details v-if="getWeather" :data="getWeather" />
       </div>
     </footer>
   </div>
@@ -35,23 +35,19 @@ export default {
   data() {
     return {
       params: {
-        units: "metric",
         q: "Краснодар",
       },
     };
   },
   computed: {
-    ...mapGetters(["getWeather"]),
+    ...mapGetters(["getWeather", "getLoad"]),
   },
-  beforeMount() {
-    this.fetchData();
+  async beforeMount() {
+    await this.loadWeather(this.params);
     console.log(this.getWeather);
   },
   methods: {
     ...mapActions(["loadWeather"]),
-    async fetchData() {
-      await this.loadWeather(this.params);
-    },
   },
   components: {
     Search,
@@ -79,6 +75,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  background: #498cec;
   &.clear,
   &.clouds {
     background: #498cec;
